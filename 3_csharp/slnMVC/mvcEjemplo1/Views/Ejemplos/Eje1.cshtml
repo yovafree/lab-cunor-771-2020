@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Eje1";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eje1</h2>
+
+<div class="row">
+    <div class="col-md-3 form-horizontal">
+        <form action="/Ejemplos/Eje1" method="post">
+            <br />
+            <input type="text" class="form-control" name="usr" placeholder="Usuario" required autofocus>
+            <br />
+            <input type="password" class="form-control" name="pwd" placeholder="Contraseña" required>
+            <br />
+            <button class="btn btn-primary" type="submit">
+                Iniciar sesión
+            </button>
+            <label class="checkbox pull-right">
+                <input type="checkbox" name="rme">
+                <label>Recordarme</label>
+            </label>
+        </form>
+    </div>
+</div>
+
+@if (ViewBag.info != null) {
+<table>
+    <tr>
+        <td>Usuario</td>
+        <td>@ViewBag.info[0]</td>
+    </tr>
+    <tr>
+        <td>Contraseña</td>
+        <td>@ViewBag.info[1]</td>
+    </tr>
+    <tr>
+        <td>¿Se recuerda?</td>
+        <td>@ViewBag.info[2]</td>
+    </tr>
+</table>
+}

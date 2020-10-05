@@ -1,0 +1,43 @@
+﻿
+@{
+    ViewBag.Title = "Cunor";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Cunor</h2>
+
+<h3>@ViewBag.valor</h3>
+
+@{
+    int num = ViewBag.numero;
+
+    <table class="table table-bordered table-hover">
+
+        @for (int x = 1; x <= 10; x++)
+        {
+            <tr>
+                <td>@num</td>
+                <td>*</td>
+                <td>@x</td>
+                <td>=</td>
+                <td>@(num * x)</td>
+            </tr>
+        }
+    </table>
+}
+
+    <ul>
+        @{
+            ViewBag.str = new string[] { "Carlos", "Angel", "Melissa", "Celeste", "Kevin" };
+            ViewBag.str2 = new string[] { "Carlos", "Angel", "Melissa", "Celeste", "Kevin" };
+        }
+        @foreach (var v in ViewBag.str)
+        {
+            <li>@v</li>
+        }
+
+        @foreach (var v in ViewBag.str2)
+        {
+            <li>@v</li>
+        }
+    </ul>

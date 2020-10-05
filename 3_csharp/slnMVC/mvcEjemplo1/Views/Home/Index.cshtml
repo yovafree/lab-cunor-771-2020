@@ -1,0 +1,41 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+    Layout = "~/Views/Shared/_Layout2.cshtml";
+}
+
+<div class="jumbotron">
+    <h1>Hola Mundo :D</h1>
+    <h2>IPC 2 - CUNOR</h2>
+
+    Lenguaje Razor - Razor Pages.
+    <br />
+    @{
+        int num = 6;
+
+        <table class="table table-bordered">
+
+            @for (int x = 1; x <= 10; x++)
+            {
+                <tr>
+                    <td>@num</td>
+                    <td>*</td>
+                    <td>@x</td>
+                    <td>=</td>
+                    <td>@(num * x)</td>
+                </tr>
+            }
+        </table>
+    }
+
+    @{
+        num = -8;
+        if (num > 0)
+        {
+            <h1>Num es positivo</h1>
+        }
+        else
+        {
+            <h1>Num es negativo</h1>
+        }
+    }
+</div>

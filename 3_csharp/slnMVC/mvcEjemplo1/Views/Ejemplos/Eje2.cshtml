@@ -1,0 +1,50 @@
+﻿@model mvcEjemplo1.Models.Usuario
+@{
+    ViewBag.Title = "Eje2";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Eje2</h2>
+
+<div class="row">
+    @using (Html.BeginForm("Eje2", "Ejemplos", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <div class="col-md-3 form-horizontal">
+            <br />
+            @Html.TextBoxFor(x => x.Nombre,
+               new { @class = "form-control", placeholder = "Nombre", autofocus = "autofocus" })
+            @Html.ValidationMessageFor(x => x.Nombre, null, new { @class = "text-danger" })
+            <br />
+            @Html.TextBoxFor(x => x.Apellidos,
+               new { @class = "form-control", placeholder = "Apellidos" })
+            @Html.ValidationMessageFor(x => x.Apellidos, null, new { @class = "text-danger" })
+        </div>
+        <div class="col-md-3 form-horizontal">
+            <br />
+            @Html.TextBoxFor(x => x.Email,
+               new { @class = "form-control", placeholder = "Correo electrónico" })
+            @Html.ValidationMessageFor(m => m.Email, null, new { @class = "text-danger" })
+            <br />
+            <button class="btn btn-primary" type="submit">
+                Enviar datos
+            </button>
+        </div>
+    }
+</div>
+
+
+@if (ViewBag.info != null)
+{
+    <table>
+        <tr>
+            <td>Nombre </td>
+            <td>@ViewBag.info[0]</td>
+        </tr>
+        <tr>
+            <td>Correo Electrónico </td>
+            <td>@ViewBag.info[1]</td>
+        </tr>
+    </table>
+}
