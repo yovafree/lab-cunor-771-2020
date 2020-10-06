@@ -1,0 +1,65 @@
+﻿@model mvcEjemplo1.Models.estudiante
+
+@{
+    ViewBag.Title = "Delete";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Delete</h2>
+
+<h3>Are you sure you want to delete this?</h3>
+<div>
+    <h4>estudiante</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.nombres)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.nombres)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.apellidos)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.apellidos)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.carne)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.carne)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.fec_nacimiento)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.fec_nacimiento)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.dpi)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.dpi)
+        </dd>
+
+    </dl>
+
+    @using (Html.BeginForm()) {
+        @Html.AntiForgeryToken()
+
+        <div class="form-actions no-color">
+            <input type="submit" value="Delete" class="btn btn-default" /> |
+            @Html.ActionLink("Back to List", "Index")
+        </div>
+    }
+</div>
