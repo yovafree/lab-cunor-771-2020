@@ -4,7 +4,18 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="ctxCunor.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="ctxCunor.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="articulo">
+          <Key>
+            <PropertyRef Name="cod_articulo" />
+          </Key>
+          <Property Name="cod_articulo" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="titulo" Type="nvarchar" MaxLength="150" />
+          <Property Name="fec_publicacion" Type="date" />
+          <Property Name="autor" Type="nvarchar" MaxLength="100" />
+          <Property Name="contenido" Type="nvarchar(max)" />
+          <Property Name="estado" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="estudiante">
           <Key>
             <PropertyRef Name="cod_estudiante" />
@@ -17,10 +28,10 @@
           <Property Name="dpi" Type="nvarchar" MaxLength="15" />
         </EntityType>
         <EntityContainer Name="ctxCunorStoreContainer">
+          <EntitySet Name="articulo" EntityType="Self.articulo" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="estudiante" EntityType="Self.estudiante" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="ctxCunor" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
@@ -37,7 +48,19 @@
         </EntityType>
         <EntityContainer Name="bd_cunorEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="estudiante" EntityType="Self.estudiante" />
+          <EntitySet Name="articulo" EntityType="ctxCunor.articulo" />
         </EntityContainer>
+        <EntityType Name="articulo">
+          <Key>
+            <PropertyRef Name="cod_articulo" />
+          </Key>
+          <Property Name="cod_articulo" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="titulo" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="fec_publicacion" Type="DateTime" Precision="0" />
+          <Property Name="autor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="estado" Type="Boolean" Nullable="false" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -53,6 +76,18 @@
                 <ScalarProperty Name="carne" ColumnName="carne" />
                 <ScalarProperty Name="fec_nacimiento" ColumnName="fec_nacimiento" />
                 <ScalarProperty Name="dpi" ColumnName="dpi" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="articulo">
+            <EntityTypeMapping TypeName="ctxCunor.articulo">
+              <MappingFragment StoreEntitySet="articulo">
+                <ScalarProperty Name="estado" ColumnName="estado" />
+                <ScalarProperty Name="contenido" ColumnName="contenido" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="fec_publicacion" ColumnName="fec_publicacion" />
+                <ScalarProperty Name="titulo" ColumnName="titulo" />
+                <ScalarProperty Name="cod_articulo" ColumnName="cod_articulo" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

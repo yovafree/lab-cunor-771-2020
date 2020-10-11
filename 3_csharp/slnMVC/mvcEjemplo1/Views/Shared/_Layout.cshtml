@@ -39,6 +39,14 @@
     @Scripts.Render("~/bundles/jquery")
     @Scripts.Render("~/bundles/jqueryval")
     @Scripts.Render("~/bundles/bootstrap")
+    <script src="https://cdn.ckeditor.com/ckeditor5/23.0.0/classic/ckeditor.js"></script>
+    <script>
+        ClassicEditor
+            .create(document.querySelector('#contenido'))
+            .catch(error => {
+                console.error(error);
+            });
+    </script>
     @RenderSection("scripts", required: false)
 </body>
 </html>

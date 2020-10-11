@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Artículos</h2>
+<br />
+@Html.ActionLink("Nuevo artículo","create",null,new { @class="btn btn-primary"})
+<br />
+<table class="table table-bordered">
+    <thead>
+        <tr>
+            <th>COD</th>
+            <th>Titulo</th>
+            <th>Autor</th>
+            <th>Fec. Publicación</th>
+            <th>Operaciones</th>
+        </tr>
+    </thead>
+    <tbody>
+        
+            @foreach (var item in ViewBag.lstArticulos) {
+        <tr>
+            <td>@item.cod_articulo</td>
+            <td>@item.titulo</td>
+            <td>@item.autor</td>
+            <td>@item.fec_publicacion</td>
+            <td>
+                @Html.ActionLink("Editar","Edit",new { id=item.cod_articulo }, new { @class ="btn btn-primary btn-sm" })
+            </td>
+        </tr>
+            }
+    </tbody>
+</table>
