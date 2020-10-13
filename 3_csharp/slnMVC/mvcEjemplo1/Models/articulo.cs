@@ -15,6 +15,12 @@ namespace mvcEjemplo1.Models
 
     public partial class articulo
     {
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public articulo()
+        {
+            this.comentario = new HashSet<comentario>();
+        }
+    
         public int cod_articulo { get; set; }
         public string titulo { get; set; }
         public Nullable<System.DateTime> fec_publicacion { get; set; }
@@ -22,5 +28,11 @@ namespace mvcEjemplo1.Models
         [AllowHtml]
         public string contenido { get; set; }
         public bool estado { get; set; }
+        public string url_img { get; set; }
+        [AllowHtml]
+        public string resumen { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<comentario> comentario { get; set; }
     }
 }

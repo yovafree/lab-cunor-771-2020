@@ -70,5 +70,20 @@ namespace mvcEjemplo1.Controllers
 
             return View(articulo);
         }
+
+        public ActionResult Delete(int id)
+        {
+            articulo articulo = bd.articulo.Find(id);
+
+            if (articulo != null)
+            {
+                bd.articulo.Remove(articulo);
+                bd.SaveChanges();
+                return RedirectToAction("Index");
+            }
+            else {
+                return HttpNotFound();
+            }
+        }
     }
 }

@@ -1,0 +1,35 @@
+﻿
+@{
+    ViewBag.Title = "Entradas";
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+}
+
+<h2>Blog IPC 2 - CUNOR</h2>
+
+@foreach (var item in ViewBag.lstArticulos) {
+    <article class="blog-articulo">
+        <div class="row">
+            <div class="col-md-3">
+                @if (item.url_img == "" || item.url_img == null)
+                {
+                    <img src="https://via.placeholder.com/250x250?text=Visit+Blogging.com+Now" class="img-thumbnail float-left" />
+                }
+                else
+                {
+                    <img src="@item.url_img" class="img-thumbnail float-left" />
+                }
+            </div>
+            <div class="col-md-9">
+                <h2><a href="/Blog/Entrada/@item.cod_articulo">@item.titulo</a></h2>
+                <span>Fecha de publicación: @item.fec_publicacion</span> - <span>Autor: @item.autor</span>
+            </div>
+            <div class="col-md-12">
+                <p>
+                    @Html.Raw(item.resumen)
+                    @Html.ActionLink("Leer más..", "Entrada", new { id = item.cod_articulo }, new { @class = "btn btn-primary" })
+                </p>
+            </div>
+        </div>
+        
+    </article>
+}

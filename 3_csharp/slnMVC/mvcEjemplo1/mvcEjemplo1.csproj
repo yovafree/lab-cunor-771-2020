@@ -129,6 +129,7 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ArticulosController.cs" />
+    <Compile Include="Controllers\BlogController.cs" />
     <Compile Include="Controllers\EjemplosController.cs" />
     <Compile Include="Controllers\EstudiantesController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
@@ -136,6 +137,9 @@
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\articulo.cs">
+      <DependentUpon>mdlCunor.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\comentario.cs">
       <DependentUpon>mdlCunor.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\estudiante.cs">
@@ -230,6 +234,9 @@
     <Content Include="Views\Articulos\Index.cshtml" />
     <Content Include="Views\Articulos\Create.cshtml" />
     <Content Include="Views\Articulos\Edit.cshtml" />
+    <Content Include="Views\Blog\Index.cshtml" />
+    <Content Include="Views\Shared\_LayoutBlog.cshtml" />
+    <Content Include="Views\Blog\Entrada.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />

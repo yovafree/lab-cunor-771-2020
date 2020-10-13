@@ -27,7 +27,8 @@
             <td>@item.autor</td>
             <td>@item.fec_publicacion</td>
             <td>
-                @Html.ActionLink("Editar","Edit",new { id=item.cod_articulo }, new { @class ="btn btn-primary btn-sm" })
+                @Html.ActionLink("Editar", "Edit", new { id = item.cod_articulo }, new { @class = "btn btn-primary btn-sm" }) |
+                @Html.ActionLink("Eliminar", "Delete", new { id = item.cod_articulo }, new { @class = "btn btn-danger btn-sm" })
             </td>
         </tr>
             }

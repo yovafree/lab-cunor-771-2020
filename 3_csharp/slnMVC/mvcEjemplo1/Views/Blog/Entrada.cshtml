@@ -1,0 +1,65 @@
+﻿
+@{
+    ViewBag.Title = "Entradas";
+    Layout = "~/Views/Shared/_LayoutBlog.cshtml";
+}
+
+<article class="blog-articulo">
+    @if (ViewBag.articulo.url_img != "" && ViewBag.articulo.url_img != null)
+    {
+        <img src="@ViewBag.articulo.url_img" class="img-thumbnail float-left" />
+    }
+
+    <h2>@ViewBag.articulo.titulo</h2>
+    <span>Fecha de publicación: @ViewBag.articulo.fec_publicacion</span> - <span>Autor: @ViewBag.articulo.autor</span>
+    <p>
+        @Html.Raw(ViewBag.articulo.contenido)
+    </p>
+
+    <hr />
+    <h2>Comentarios</h2>
+    @foreach(var item in ViewBag.lstComentarios)
+    {
+    <div class="comentario">        
+        <b>Autor:</b> @item.autor <b>Fecha:</b> @item.fec_creacion<br />
+        <b>Correo electrónico:</b> @item.correo_electronico
+        <p>
+            <b>Comentario: </b><br />
+            @item.comentario1
+        </p>
+    </div>
+    }
+
+    @using (Html.BeginForm("CreateComentario", "Blog",FormMethod.Post, new { @class ="row form-comentario"}))
+    {
+        <div class="form-group">
+            <label class="control-label col-md-2">Autor</label>
+            <div class="col-md-10">
+                @Html.Hidden("cod_articulo", null, new { @value = ViewBag.cod_articulo })
+                @Html.Editor("autor", new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Correo electrónico</label>
+            <div class="col-md-10">
+                @Html.Editor("correo_electronico", new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <label class="control-label col-md-2">Comentario:</label>
+            <div class="col-md-10">
+                @Html.TextArea("comentario1", new { htmlAttributes = new { @class = "form-control", @required = "required" } })
+            </div>
+        </div>
+
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Enviar" class="btn btn-default" />
+            </div>
+        </div>
+    }
+
+</article>
+

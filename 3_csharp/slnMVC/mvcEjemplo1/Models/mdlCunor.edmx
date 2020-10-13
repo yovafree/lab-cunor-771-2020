@@ -15,6 +15,19 @@
           <Property Name="autor" Type="nvarchar" MaxLength="100" />
           <Property Name="contenido" Type="nvarchar(max)" />
           <Property Name="estado" Type="bit" Nullable="false" />
+          <Property Name="url_img" Type="nvarchar" MaxLength="500" />
+          <Property Name="resumen" Type="nvarchar" MaxLength="600" />
+        </EntityType>
+        <EntityType Name="comentario">
+          <Key>
+            <PropertyRef Name="cod_comentario" />
+          </Key>
+          <Property Name="cod_comentario" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="autor" Type="nvarchar" MaxLength="200" />
+          <Property Name="comentario" Type="nvarchar(max)" />
+          <Property Name="correo_electronico" Type="nvarchar" MaxLength="200" />
+          <Property Name="cod_articulo" Type="int" />
+          <Property Name="fec_creacion" Type="date" />
         </EntityType>
         <EntityType Name="estudiante">
           <Key>
@@ -27,9 +40,26 @@
           <Property Name="fec_nacimiento" Type="date" />
           <Property Name="dpi" Type="nvarchar" MaxLength="15" />
         </EntityType>
+        <Association Name="FK_articulo_comentario">
+          <End Role="articulo" Type="Self.articulo" Multiplicity="0..1" />
+          <End Role="comentario" Type="Self.comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articulo">
+              <PropertyRef Name="cod_articulo" />
+            </Principal>
+            <Dependent Role="comentario">
+              <PropertyRef Name="cod_articulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <EntityContainer Name="ctxCunorStoreContainer">
           <EntitySet Name="articulo" EntityType="Self.articulo" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="comentario" EntityType="Self.comentario" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="estudiante" EntityType="Self.estudiante" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_articulo_comentario" Association="Self.FK_articulo_comentario">
+            <End Role="articulo" EntitySet="articulo" />
+            <End Role="comentario" EntitySet="comentario" />
+          </AssociationSet>
         </EntityContainer>
       </Schema></edmx:StorageModels>
     <!-- CSDL content -->
@@ -49,6 +79,11 @@
         <EntityContainer Name="bd_cunorEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="estudiante" EntityType="Self.estudiante" />
           <EntitySet Name="articulo" EntityType="ctxCunor.articulo" />
+          <EntitySet Name="comentario" EntityType="ctxCunor.comentario" />
+          <AssociationSet Name="FK_articulo_comentario" Association="ctxCunor.FK_articulo_comentario">
+            <End Role="articulo" EntitySet="articulo" />
+            <End Role="comentario" EntitySet="comentario" />
+          </AssociationSet>
         </EntityContainer>
         <EntityType Name="articulo">
           <Key>
@@ -60,7 +95,34 @@
           <Property Name="autor" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
           <Property Name="contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="estado" Type="Boolean" Nullable="false" />
+          <Property Name="url_img" Type="String" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="resumen" Type="String" MaxLength="600" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="comentario" Relationship="ctxCunor.FK_articulo_comentario" FromRole="articulo" ToRole="comentario" />
         </EntityType>
+        <EntityType Name="comentario">
+          <Key>
+            <PropertyRef Name="cod_comentario" />
+          </Key>
+          <Property Name="cod_comentario" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="autor" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="comentario1" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+          <Property Name="correo_electronico" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="cod_articulo" Type="Int32" />
+          <Property Name="fec_creacion" Type="DateTime" Precision="0" />
+          <NavigationProperty Name="articulo" Relationship="ctxCunor.FK_articulo_comentario" FromRole="comentario" ToRole="articulo" />
+        </EntityType>
+        <Association Name="FK_articulo_comentario">
+          <End Type="ctxCunor.articulo" Role="articulo" Multiplicity="0..1" />
+          <End Type="ctxCunor.comentario" Role="comentario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="articulo">
+              <PropertyRef Name="cod_articulo" />
+            </Principal>
+            <Dependent Role="comentario">
+              <PropertyRef Name="cod_articulo" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -82,12 +144,26 @@
           <EntitySetMapping Name="articulo">
             <EntityTypeMapping TypeName="ctxCunor.articulo">
               <MappingFragment StoreEntitySet="articulo">
+                <ScalarProperty Name="resumen" ColumnName="resumen" />
+                <ScalarProperty Name="url_img" ColumnName="url_img" />
                 <ScalarProperty Name="estado" ColumnName="estado" />
                 <ScalarProperty Name="contenido" ColumnName="contenido" />
                 <ScalarProperty Name="autor" ColumnName="autor" />
                 <ScalarProperty Name="fec_publicacion" ColumnName="fec_publicacion" />
                 <ScalarProperty Name="titulo" ColumnName="titulo" />
                 <ScalarProperty Name="cod_articulo" ColumnName="cod_articulo" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="comentario">
+            <EntityTypeMapping TypeName="ctxCunor.comentario">
+              <MappingFragment StoreEntitySet="comentario">
+                <ScalarProperty Name="fec_creacion" ColumnName="fec_creacion" />
+                <ScalarProperty Name="cod_articulo" ColumnName="cod_articulo" />
+                <ScalarProperty Name="correo_electronico" ColumnName="correo_electronico" />
+                <ScalarProperty Name="comentario1" ColumnName="comentario" />
+                <ScalarProperty Name="autor" ColumnName="autor" />
+                <ScalarProperty Name="cod_comentario" ColumnName="cod_comentario" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
