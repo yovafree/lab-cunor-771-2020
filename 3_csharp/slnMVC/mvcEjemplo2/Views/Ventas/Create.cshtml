@@ -1,0 +1,94 @@
+﻿@model mvcEjemplo2.Models.venta
+
+@{
+    ViewBag.Title = "Nueva Venta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Nueva Venta</h2>
+
+@using (Html.BeginForm())
+{
+    <div class="form-group">
+        @Html.LabelFor(model => model.fec_venta, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.fec_venta, new { htmlAttributes = new { @class = "form-control", @type="date"} })
+            @Html.ValidationMessageFor(model => model.fec_venta, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.cod_cliente, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.DropDownListFor(model => model.cod_cliente, (SelectList) ViewBag.lstClientes, new { @class = "form-control" })
+            @Html.ValidationMessageFor(model => model.cod_cliente, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="form-group">
+        @Html.LabelFor(model => model.observacion, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.observacion, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.observacion, "", new { @class = "text-danger" })
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-md-12">
+            <h2>Productos de la venta</h2>
+            <button type="button" class="btn btn-primary" id="btnAgProducto">Agregar producto</button>
+            <table class="table table-bordered" id="tblProductos">
+                <thead>
+                    <tr>
+                        <th>Producto</th>
+                        <th>Cantidad</th>
+                        <th>Precio Unitario</th>
+                        <th>Subtotal</th>
+                        <th>#</th>
+                    </tr>
+                </thead>
+                <tbody>
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <div class="form-group">
+        <div class="col-md-offset-2 col-md-10">
+            <input type="submit" value="Crear Venta" class="btn btn-default" />
+        </div>
+    </div>
+}
+
+
+@section Scripts {
+    @Scripts.Render("~/bundles/jqueryval")
+
+    <script>
+        var lstProd = "";
+        var cnt = 0;
+
+        @foreach(var item in ViewBag.lstProductos) {
+            <text>lstProd += '<option value="@item.cod_producto">@item.nombre</option>';</text>
+        }
+
+
+        $(document).ready(function () {
+            $("#btnAgProducto").click(function () {
+                var str = "";
+                str += "<tr>";
+                str += "<td><select name='det_venta["+cnt+"].cod_producto' class='form-control'>"+lstProd+"</select></td>";
+                str += "<td><input name='det_venta[" + cnt +"].cantidad' type='text' class='form-control' value='0'></td>";
+                str += "<td><input name='det_venta[" + cnt +"].precio_unitario' type='text' class='form-control' value='0'></td>";
+                str += "<td><input type='text' class='form-control' value='0'></td>";
+                str += "<td></td>";
+                str += "</tr>";
+
+                cnt++;
+
+                $("#tblProductos > tbody").append(str);
+            });
+        });
+    </script>
+}

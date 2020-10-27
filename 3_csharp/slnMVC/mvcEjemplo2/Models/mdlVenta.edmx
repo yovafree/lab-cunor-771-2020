@@ -1,0 +1,265 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+      <Schema Namespace="mdlVentas.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="cod_cliente" />
+          </Key>
+          <Property Name="cod_cliente" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nit" Type="nvarchar" MaxLength="15" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="150" />
+          <Property Name="direccion" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <EntityType Name="det_venta">
+          <Key>
+            <PropertyRef Name="cod_det_venta" />
+          </Key>
+          <Property Name="cod_det_venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="cod_producto" Type="int" Nullable="false" />
+          <Property Name="cantidad" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="precio_unitario" Type="decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="cod_venta" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="cod_producto" />
+          </Key>
+          <Property Name="cod_producto" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="nombre" Type="nvarchar" MaxLength="100" />
+        </EntityType>
+        <EntityType Name="venta">
+          <Key>
+            <PropertyRef Name="cod_venta" />
+          </Key>
+          <Property Name="cod_venta" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="fec_venta" Type="date" />
+          <Property Name="cod_cliente" Type="int" />
+          <Property Name="observacion" Type="nvarchar" MaxLength="150" />
+        </EntityType>
+        <Association Name="FK_det_venta_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="1" />
+          <End Role="det_venta" Type="Self.det_venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="cod_producto" />
+            </Principal>
+            <Dependent Role="det_venta">
+              <PropertyRef Name="cod_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_venta_venta">
+          <End Role="venta" Type="Self.venta" Multiplicity="1" />
+          <End Role="det_venta" Type="Self.det_venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="venta">
+              <PropertyRef Name="cod_venta" />
+            </Principal>
+            <Dependent Role="det_venta">
+              <PropertyRef Name="cod_venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_venta_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+          <End Role="venta" Type="Self.venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="cod_cliente" />
+            </Principal>
+            <Dependent Role="venta">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="mdlVentasStoreContainer">
+          <EntitySet Name="cliente" EntityType="Self.cliente" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="det_venta" EntityType="Self.det_venta" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="producto" EntityType="Self.producto" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="venta" EntityType="Self.venta" Schema="dbo" store:Type="Tables" />
+          <AssociationSet Name="FK_det_venta_producto" Association="Self.FK_det_venta_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="det_venta" EntitySet="det_venta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_venta_venta" Association="Self.FK_det_venta_venta">
+            <End Role="venta" EntitySet="venta" />
+            <End Role="det_venta" EntitySet="det_venta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_venta_cliente" Association="Self.FK_venta_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="venta" EntitySet="venta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="mdlVentas" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="cliente">
+          <Key>
+            <PropertyRef Name="cod_cliente" />
+          </Key>
+          <Property Name="cod_cliente" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nit" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
+          <Property Name="nombre" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <Property Name="direccion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="venta" Relationship="Self.FK_venta_cliente" FromRole="cliente" ToRole="venta" />
+        </EntityType>
+        <EntityType Name="det_venta">
+          <Key>
+            <PropertyRef Name="cod_det_venta" />
+          </Key>
+          <Property Name="cod_det_venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="cod_producto" Type="Int32" Nullable="false" />
+          <Property Name="cantidad" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="precio_unitario" Type="Decimal" Precision="12" Scale="2" Nullable="false" />
+          <Property Name="cod_venta" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="producto" Relationship="Self.FK_det_venta_producto" FromRole="det_venta" ToRole="producto" />
+          <NavigationProperty Name="venta" Relationship="Self.FK_det_venta_venta" FromRole="det_venta" ToRole="venta" />
+        </EntityType>
+        <EntityType Name="producto">
+          <Key>
+            <PropertyRef Name="cod_producto" />
+          </Key>
+          <Property Name="cod_producto" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="nombre" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="det_venta" Relationship="Self.FK_det_venta_producto" FromRole="producto" ToRole="det_venta" />
+        </EntityType>
+        <EntityType Name="venta">
+          <Key>
+            <PropertyRef Name="cod_venta" />
+          </Key>
+          <Property Name="cod_venta" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="fec_venta" Type="DateTime" Precision="0" />
+          <Property Name="cod_cliente" Type="Int32" />
+          <Property Name="observacion" Type="String" MaxLength="150" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="cliente" Relationship="Self.FK_venta_cliente" FromRole="venta" ToRole="cliente" />
+          <NavigationProperty Name="det_venta" Relationship="Self.FK_det_venta_venta" FromRole="venta" ToRole="det_venta" />
+        </EntityType>
+        <Association Name="FK_venta_cliente">
+          <End Role="cliente" Type="Self.cliente" Multiplicity="0..1" />
+          <End Role="venta" Type="Self.venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="cliente">
+              <PropertyRef Name="cod_cliente" />
+            </Principal>
+            <Dependent Role="venta">
+              <PropertyRef Name="cod_cliente" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_venta_producto">
+          <End Role="producto" Type="Self.producto" Multiplicity="1" />
+          <End Role="det_venta" Type="Self.det_venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="producto">
+              <PropertyRef Name="cod_producto" />
+            </Principal>
+            <Dependent Role="det_venta">
+              <PropertyRef Name="cod_producto" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_det_venta_venta">
+          <End Role="venta" Type="Self.venta" Multiplicity="1" />
+          <End Role="det_venta" Type="Self.det_venta" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="venta">
+              <PropertyRef Name="cod_venta" />
+            </Principal>
+            <Dependent Role="det_venta">
+              <PropertyRef Name="cod_venta" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="ctxVentas" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="cliente" EntityType="Self.cliente" />
+          <EntitySet Name="det_venta" EntityType="Self.det_venta" />
+          <EntitySet Name="producto" EntityType="Self.producto" />
+          <EntitySet Name="venta" EntityType="Self.venta" />
+          <AssociationSet Name="FK_venta_cliente" Association="Self.FK_venta_cliente">
+            <End Role="cliente" EntitySet="cliente" />
+            <End Role="venta" EntitySet="venta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_venta_producto" Association="Self.FK_det_venta_producto">
+            <End Role="producto" EntitySet="producto" />
+            <End Role="det_venta" EntitySet="det_venta" />
+          </AssociationSet>
+          <AssociationSet Name="FK_det_venta_venta" Association="Self.FK_det_venta_venta">
+            <End Role="venta" EntitySet="venta" />
+            <End Role="det_venta" EntitySet="det_venta" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="mdlVentasStoreContainer" CdmEntityContainer="ctxVentas">
+          <EntitySetMapping Name="cliente">
+            <EntityTypeMapping TypeName="mdlVentas.cliente">
+              <MappingFragment StoreEntitySet="cliente">
+                <ScalarProperty Name="cod_cliente" ColumnName="cod_cliente" />
+                <ScalarProperty Name="nit" ColumnName="nit" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+                <ScalarProperty Name="direccion" ColumnName="direccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="det_venta">
+            <EntityTypeMapping TypeName="mdlVentas.det_venta">
+              <MappingFragment StoreEntitySet="det_venta">
+                <ScalarProperty Name="cod_det_venta" ColumnName="cod_det_venta" />
+                <ScalarProperty Name="cod_producto" ColumnName="cod_producto" />
+                <ScalarProperty Name="cantidad" ColumnName="cantidad" />
+                <ScalarProperty Name="precio_unitario" ColumnName="precio_unitario" />
+                <ScalarProperty Name="cod_venta" ColumnName="cod_venta" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="producto">
+            <EntityTypeMapping TypeName="mdlVentas.producto">
+              <MappingFragment StoreEntitySet="producto">
+                <ScalarProperty Name="cod_producto" ColumnName="cod_producto" />
+                <ScalarProperty Name="nombre" ColumnName="nombre" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="venta">
+            <EntityTypeMapping TypeName="mdlVentas.venta">
+              <MappingFragment StoreEntitySet="venta">
+                <ScalarProperty Name="cod_venta" ColumnName="cod_venta" />
+                <ScalarProperty Name="fec_venta" ColumnName="fec_venta" />
+                <ScalarProperty Name="cod_cliente" ColumnName="cod_cliente" />
+                <ScalarProperty Name="observacion" ColumnName="observacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="false" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Ninguno" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>

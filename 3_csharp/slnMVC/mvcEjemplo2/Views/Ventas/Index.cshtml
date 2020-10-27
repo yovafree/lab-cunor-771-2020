@@ -1,0 +1,47 @@
+﻿@model IEnumerable<mvcEjemplo2.Models.venta>
+
+@{
+    ViewBag.Title = "Index";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Index</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.fec_venta)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.observacion)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.cliente.nit)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.fec_venta)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.observacion)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.nit) 
+            @Html.DisplayFor(modelItem => item.cliente.nombre)
+        </td>
+        <td>
+            @Html.ActionLink("Edit", "Edit", new { id=item.cod_venta }) |
+            @Html.ActionLink("Details", "Details", new { id=item.cod_venta }) |
+            @Html.ActionLink("Delete", "Delete", new { id=item.cod_venta })
+        </td>
+    </tr>
+}
+
+</table>
